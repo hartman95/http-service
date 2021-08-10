@@ -21,7 +21,7 @@ exports.new = function (req, res) {
     if (err) {
       res.status(400).json({
         status: "error",
-        message: 'Object was not created.  Duplicate id for bucket ' + req.params.bucketId,
+        message: 'Duplicate object_id' + req.params.objectId + ' for bucket ' + req.params.bucketId,
       })
     } else {
       res.status(201).json({
@@ -78,6 +78,25 @@ exports.delete = function (req, res) {
       res.status(400).json({
         status: 'error',
         message: 'Not Found',
+      })
+    }
+  })
+};
+
+// Handle view by bucket
+exports.viewByBucket = function (req, res) {
+  BucketObj.find({
+    'bucket_id': req.params.bucketId
+  }, function(err, result) {
+    if (err) throw err;
+
+    if (Object.keys(result).length !== 0) {
+      res.status(200).send(result);
+
+    } else {
+      res.status(400).json({
+        status: 'error',
+        message: 'No Objects Found in bucket ' + req.params.bucketId,
       })
     }
   })
