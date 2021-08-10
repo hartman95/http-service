@@ -13,6 +13,7 @@ let bucketSchema = mongoose.Schema({
   }
 });
 
+// Prevent duplicates per bucket
 bucketSchema.index({ bucket_id: 1, object_id: 1 }, { unique: true });
 
 // Export our Object model
