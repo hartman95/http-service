@@ -1,0 +1,23 @@
+{
+  "name": "http-service",
+  "version": "1.0.0",
+  "description": "Red Hat Coding Task",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hartman95/http-service.git"
+  },
+  "author": "Casey Hartman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hartman95/http-service/issues"
+  },
+  "homepage": "https://github.com/hartman95/http-service#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.13.6"
+  }
+}

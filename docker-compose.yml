@@ -1,0 +1,16 @@
+version: '3'
+services:
+  node:
+    container_name: http-service
+    restart: always
+    build: .
+    ports:
+      - 8080:8080
+    volumes:
+      - ./:/code
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - 27017:27017
+
