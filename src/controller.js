@@ -1,11 +1,10 @@
-
 // Import model
 BucketObj = require('../models/Bucket');
 
 // Show all
 exports.index = function (req, res) {
   BucketObj.find()
-      .then(items => res.send( items ))
+      .then(items => res.send(items))
       .catch(err => res.status(404).json({ msg: 'No items found' }));
 };
 
@@ -20,8 +19,7 @@ exports.new = function (req, res) {
     // Check for validation error
     if (err) {
       res.status(400).json({
-        status: "error",
-        message: 'Duplicate object_id' + req.params.objectId + ' for bucket ' + req.params.bucketId,
+        message: 'Duplicate object_id ' + req.params.objectId + ' for bucket ' + req.params.bucketId,
       })
     } else {
       res.status(201).json({
@@ -44,7 +42,6 @@ exports.view = function (req, res) {
 
     } else {
       res.status(400).json({
-        status: 'error',
         message: 'Not Found',
       })
     }
@@ -69,14 +66,12 @@ exports.delete = function (req, res) {
         if (err)
           res.send(err);
         res.status(200).json({
-          status: "success",
-          message: 'Bucket object deleted',
+          message: 'Deleted',
         });
       });
 
     } else {
       res.status(400).json({
-        status: 'error',
         message: 'Not Found',
       })
     }
@@ -95,7 +90,6 @@ exports.viewByBucket = function (req, res) {
 
     } else {
       res.status(400).json({
-        status: 'error',
         message: 'No Objects Found in bucket ' + req.params.bucketId,
       })
     }

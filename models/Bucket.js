@@ -1,3 +1,4 @@
+// Import our modules
 const mongoose = require('mongoose');
 
 // Setup schema
