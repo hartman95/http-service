@@ -5,7 +5,9 @@ BucketObj = require('../models/Bucket');
 exports.index = function (req, res) {
   BucketObj.find()
       .then(items => res.send(items))
-      .catch(err => res.status(404).json({ msg: 'No items found' }));
+      .catch(err => res.status(400).json({
+        message: err
+      }));
 };
 
 // Handle create
@@ -15,6 +17,7 @@ exports.new = function (req, res) {
     object_id: req.params.objectId
   });
 
+  // Save new object
   newBucketObj.save(function (err) {
     // Check for validation error
     if (err) {
@@ -37,9 +40,9 @@ exports.view = function (req, res) {
   }, function(err, result) {
     if (err) throw err;
 
+    // Found results
     if (Object.keys(result).length !== 0) {
       res.status(200).send(result);
-
     } else {
       res.status(400).json({
         message: 'Not Found',
@@ -52,25 +55,30 @@ exports.view = function (req, res) {
 exports.delete = function (req, res) {
   var objectId = req.params.objectId;
   var bucketId = req.params.bucketId;
+
+  // TODO: find cleaner way
+  // First search using find
   BucketObj.find({
     'object_id': objectId,
     'bucket_id': bucketId,
   }, function(err, result) {
     if (err) throw err;
-    // Was found
+
+    // Are there results
     if (Object.keys(result).length !== 0) {
+      // Now remove
       BucketObj.remove({
         'object_id': objectId,
         'bucket_id': bucketId,
       }, function (err, bucket) {
-        if (err)
-          res.send(err);
+        if (err) res.send(err);
         res.status(200).json({
           message: 'Deleted',
         });
       });
 
     } else {
+      // No results found
       res.status(400).json({
         message: 'Not Found',
       })
@@ -85,12 +93,12 @@ exports.viewByBucket = function (req, res) {
   }, function(err, result) {
     if (err) throw err;
 
+    // Return if results are populated
     if (Object.keys(result).length !== 0) {
       res.status(200).send(result);
-
     } else {
       res.status(400).json({
-        message: 'No Objects Found in bucket ' + req.params.bucketId,
+        message: 'Not Found',
       })
     }
   })
