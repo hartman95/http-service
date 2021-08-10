@@ -3,7 +3,7 @@ BucketObj = require('../models/Bucket');
 
 // Show all
 exports.index = function (req, res) {
-  BucketObj.find()
+  BucketObj.find().select(['bucket_id', 'object_id'])
       .then(items => res.send(items))
       .catch(err => res.status(400).json({
         message: err

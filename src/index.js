@@ -1,7 +1,6 @@
 // Initialize our modules
 let mongoose = require('mongoose');
 let express = require('express');
-const url = require('url');
 
 // Initialize app
 let app = express();
@@ -21,10 +20,8 @@ mongoose.connect('mongodb://mongo:27017/docker-node-mongo', { useNewUrlParser: t
 app.use('/objects', routes);
 
 // Change the 404 message
-app.use(function(req, res, next) {
-  let q = url.parse(req.url, true);
-  let path = q.pathname;
-  res.status(404).send(path + ' Not Found');
+app.use(function(req, res) {
+  res.status(404).end();
 });
 
 // Launch app on specified port
