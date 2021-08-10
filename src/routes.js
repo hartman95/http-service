@@ -8,6 +8,9 @@ const controller = require('./controller');
 router.route('/all')
     .get(controller.index);
 
+router.route('/bucket/:bucketId')
+    .get(controller.viewByBucket);
+
 router.route('/:bucketId/:objectId')
     .get(controller.view)
     .put(controller.new)
