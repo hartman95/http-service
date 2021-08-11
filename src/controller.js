@@ -22,7 +22,7 @@ exports.new = function (req, res) {
 
   // Save new object
   newBucketObj.save(function (err) {
-    // Check for validation error
+    // Check for validation error and return 400 (normally would be 404)
     if (err) {
       res.status(400).json({
         message: 'Duplicate object_id ' + req.params.objectId + ' for bucket ' + req.params.bucketId,
@@ -76,7 +76,7 @@ exports.delete = function (req, res) {
       });
 
     } else {
-      // No results found
+      // No results found so return 400 (normally would be 404)
       res.status(400).json({
         message: 'Not Found',
       })
