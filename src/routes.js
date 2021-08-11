@@ -5,13 +5,13 @@ let router = require('express').Router();
 const controller = require('./controller');
 
 // Bucket controller routes
-router.route('/all')
+router.route('/objects/all')
     .get(controller.index);
 
-router.route('/bucket/:bucketId')
+router.route('/objects/bucket/:bucketId')
     .get(controller.viewByBucket);
 
-router.route('/:bucketId/:objectId')
+router.route('/objects/:bucketId/:objectId')
     .get(controller.view)
     .put(controller.new)
     .delete(controller.delete);

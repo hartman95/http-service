@@ -17,7 +17,7 @@ mongoose.connect('mongodb://mongo:27017/docker-node-mongo', { useNewUrlParser: t
     .catch(err => console.log(err));
 
 // Use routes file
-app.use('/objects', routes);
+app.use('/', routes);
 
 // Change the 404 message
 app.use(function(req, res) {

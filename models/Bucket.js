@@ -10,6 +10,10 @@ let bucketSchema = mongoose.Schema({
   object_id: {
     type: String,
     required: true
+  },
+  data: {
+    type: String,
+    required: true
   }
 });
 

@@ -3,18 +3,21 @@ BucketObj = require('../models/Bucket');
 
 // Show all
 exports.index = function (req, res) {
-  BucketObj.find().select(['bucket_id', 'object_id'])
-      .then(items => res.send(items))
-      .catch(err => res.status(400).json({
-        message: err
-      }));
+  // Return the url as 'text' from the request
+  let query = BucketObj.find().select('data -_id');
+
+  query.exec(function (err, result) {
+    if (err) throw err;
+    res.send(result);
+  });
 };
 
 // Handle create
 exports.new = function (req, res) {
   const newBucketObj = new BucketObj({
-    bucket_id: req.params.bucketId,
-    object_id: req.params.objectId
+    'bucket_id': req.params.bucketId,
+    'object_id': req.params.objectId,
+    'data': req.url
   });
 
   // Save new object
@@ -34,21 +37,16 @@ exports.new = function (req, res) {
 
 // Handle view
 exports.view = function (req, res) {
-  BucketObj.find({
-    'object_id': req.params.objectId,
-    'bucket_id': req.params.bucketId,
-  }, function(err, result) {
-    if (err) throw err;
+  // Return the url as 'text' from the request
+  let query = BucketObj.find({
+      'object_id': req.params.objectId,
+      'bucket_id': req.params.bucketId,
+    }).select('data -_id');
 
-    // Found results
-    if (Object.keys(result).length !== 0) {
-      res.status(200).send(result);
-    } else {
-      res.status(400).json({
-        message: 'Not Found',
-      })
-    }
-  })
+  query.exec(function (err, result) {
+    if (err) throw err;
+    res.send(result);
+  });
 };
 
 // Handle delete
@@ -88,18 +86,13 @@ exports.delete = function (req, res) {
 
 // Handle view by bucket
 exports.viewByBucket = function (req, res) {
-  BucketObj.find({
+  // Return the url as 'text' from the request
+  let query = BucketObj.find({
     'bucket_id': req.params.bucketId
-  }, function(err, result) {
-    if (err) throw err;
+  }).select('data -_id');
 
-    // Return if results are populated
-    if (Object.keys(result).length !== 0) {
-      res.status(200).send(result);
-    } else {
-      res.status(400).json({
-        message: 'Not Found',
-      })
-    }
-  })
+  query.exec(function (err, result) {
+    if (err) throw err;
+    res.send(result);
+  });
 };
