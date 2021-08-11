@@ -1,7 +1,7 @@
 // Import our modules
 const mongoose = require('mongoose');
 
-// Setup schema
+// Setup schema including 'data' property for the object
 let bucketSchema = mongoose.Schema({
   bucket_id: {
     type: String,
