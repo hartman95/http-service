@@ -6,7 +6,7 @@ let express = require('express');
 let app = express();
 
 // Set port
-const port = 8080;
+const PORT = process.env.PORT || 8080;
 
 // Import routes
 let routes = require("./routes");
@@ -25,6 +25,6 @@ app.use(function(req, res) {
 });
 
 // Launch app on specified port
-app.listen(port, function () {
-  console.log('Service running on port ' + port);
+app.listen(PORT, function () {
+  console.log('Service running on port ' + PORT);
 });
