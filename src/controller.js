@@ -45,7 +45,16 @@ exports.view = function (req, res) {
 
   query.exec(function (err, result) {
     if (err) throw err;
-    res.send(result);
+
+    // Are there results
+    if (Object.keys(result).length !== 0) {
+      res.send(result);
+    } else {
+      // No results found so return 400 (normally would be 404)
+      res.status(400).json({
+        message: 'Not Found',
+      })
+    }
   });
 };
 
